@@ -1,0 +1,22 @@
+[
+  {"id": 1, "word": "abandon", "phonetic": "/əˈbændən/", "meaning": "抛弃，放弃", "example": "They had to abandon the sinking ship."},
+  {"id": 2, "word": "brilliant", "phonetic": "/ˈbrɪliənt/", "meaning": "杰出的，明亮的", "example": "She had a brilliant idea."},
+  {"id": 3, "word": "comprehensive", "phonetic": "/ˌkɑːmprɪˈhensɪv/", "meaning": "全面的，综合的", "example": "We offer a comprehensive range of services."},
+  {"id": 4, "word": "demonstrate", "phonetic": "/ˈdemənstreɪt/", "meaning": "演示，证明", "example": "Let me demonstrate how it works."},
+  {"id": 5, "word": "elaborate", "phonetic": "/ɪˈlæbərət/", "meaning": "详细的，精心制作的", "example": "He gave an elaborate explanation."},
+  {"id": 6, "word": "fluctuate", "phonetic": "/ˈflʌktʃueɪt/", "meaning": "波动，起伏", "example": "Prices fluctuate with market demand."},
+  {"id": 7, "word": "genuine", "phonetic": "/ˈdʒenjuɪn/", "meaning": "真正的，真诚的", "example": "She showed genuine interest in the project."},
+  {"id": 8, "word": "hypothesis", "phonetic": "/haɪˈpɑːθəsɪs/", "meaning": "假说，假设", "example": "We need to test this hypothesis."},
+  {"id": 9, "word": "inevitable", "phonetic": "/ɪnˈevɪtəbl/", "meaning": "不可避免的", "example": "Change is inevitable in life."},
+  {"id": 10, "word": "justify", "phonetic": "/ˈdʒʌstɪfaɪ/", "meaning": "证明…正当，为…辩护", "example": "How can you justify this decision?"},
+  {"id": 11, "word": "keen", "phonetic": "/kiːn/", "meaning": "热衷的，敏锐的", "example": "He is keen to learn new things."},
+  {"id": 12, "word": "legitimate", "phonetic": "/lɪˈdʒɪtɪmət/", "meaning": "合法的，正当的", "example": "That's a legitimate concern."},
+  {"id": 13, "word": "magnificent", "phonetic": "/mæɡˈnɪfɪsnt/", "meaning": "壮丽的，宏伟的", "example": "The view from the top was magnificent."},
+  {"id": 14, "word": "negotiate", "phonetic": "/nɪˈɡoʊʃieɪt/", "meaning": "谈判，协商", "example": "We need to negotiate the terms."},
+  {"id": 15, "word": "obstacle", "phonetic": "/ˈɑːbstəkl/", "meaning": "障碍，阻碍", "example": "Lack of funding is the main obstacle."},
+  {"id": 16, "word": "phenomenon", "phonetic": "/fɪˈnɑːmɪnən/", "meaning": "现象", "example": "This is a rare natural phenomenon."},
+  {"id": 17, "word": "reluctant", "phonetic": "/rɪˈlʌktənt/", "meaning": "不情愿的，勉强的", "example": "She was reluctant to admit her mistake."},
+  {"id": 18, "word": "sophisticated", "phonetic": "/səˈfɪstɪkeɪtɪd/", "meaning": "精密的，老练的", "example": "This is a highly sophisticated system."},
+  {"id": 19, "word": "tremendous", "phonetic": "/trɪˈmendəs/", "meaning": "巨大的，极好的", "example": "We've made tremendous progress."},
+  {"id": 20, "word": "undermine", "phonetic": "/ˌʌndərˈmaɪn/", "meaning": "削弱，破坏", "example": "Constant criticism can undermine confidence."}
+]

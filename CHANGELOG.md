@@ -67,5 +67,24 @@
 
 ### 下一步计划
 
-- 部署上线（后端 Railway/Render，前端 Vercel/Netlify）
 - 升级 MongoDB 存储
+
+---
+
+## [0.3.0] — 2026-05-25
+
+### 新增：部署准备
+
+- **Git 仓库** — 初始化 git，完成首次提交
+- **环境变量配置** (`client/src/api.js`) — 支持 `VITE_API_URL` 环境变量切换后端地址
+- **`.gitignore`** — 排除 node_modules / dist / .env
+- **部署指南** (`部署指南.md`) — GitHub + Render + Vercel 完整部署步骤
+  - 后端部署到 Render（Free 实例，支持 Node.js）
+  - 前端部署到 Vercel（自动检测 Vite，零配置）
+  - 自定义域名绑定说明
+
+### 待用户操作
+
+1. 创建 GitHub 仓库并推送代码
+2. Render 部署后端（需 GitHub 账号授权）
+3. Vercel 部署前端（需设置 `VITE_API_URL` 环境变量）

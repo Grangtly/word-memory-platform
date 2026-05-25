@@ -39,7 +39,10 @@
 - **状态：** complete
 
 ### 阶段 4：部署上线
-- **状态：** pending
+- [x] 4.1 初始化 git + 提交代码
+- [x] 4.2 配置生产环境变量 (VITE_API_URL)
+- [x] 4.3 编写部署指南
+- **状态：** complete
 
 ### 阶段 5：升级到 MongoDB
 - **状态：** pending

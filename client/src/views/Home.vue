@@ -12,34 +12,141 @@ function handleLogout() {
 </script>
 
 <template>
-  <div class="home-container">
-    <h1>欢迎，{{ userStore.username }}</h1>
-    <p class="subtitle">每天坚持复习，单词记得更牢</p>
-    <button class="start-btn" @click="router.push('/learn')">开始学习</button>
+  <div class="home-page">
+    <div class="greeting">
+      <p class="welcome">欢迎回来</p>
+      <h1>{{ userStore.username }}</h1>
+    </div>
+
+    <p class="motto">每天坚持，让单词成为长期记忆</p>
+
+    <button class="start-btn" @click="router.push('/learn')">
+      <span class="icon">📖</span>
+      开始今日学习
+    </button>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <span class="info-num">20</span>
+        <span class="info-label">词库单词</span>
+      </div>
+      <div class="info-card">
+        <span class="info-num">9</span>
+        <span class="info-label">复习等级</span>
+      </div>
+      <div class="info-card">
+        <span class="info-num">30d</span>
+        <span class="info-label">最长间隔</span>
+      </div>
+    </div>
+
     <button class="logout-btn" @click="handleLogout">退出登录</button>
   </div>
 </template>
 
 <style scoped>
-.home-container {
-  max-width: 400px;
-  margin: 100px auto;
+.home-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
   text-align: center;
 }
-h1 { color: #333; margin-bottom: 8px; }
-.subtitle { color: #888; margin-bottom: 40px; }
-button {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 12px;
+
+.greeting {
+  margin-bottom: 8px;
 }
-.start-btn { background: #4a90d9; color: #fff; }
-.start-btn:hover { background: #357abd; }
-.logout-btn { background: #eee; color: #666; }
-.logout-btn:hover { background: #ddd; }
+
+.welcome {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.greeting h1 {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.motto {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.start-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 48px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 20px rgba(200, 150, 62, 0.30);
+  margin-bottom: 48px;
+}
+
+.start-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(200, 150, 62, 0.40);
+}
+
+.start-btn .icon {
+  font-size: 22px;
+}
+
+.info-cards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.info-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover {
+  color: var(--danger);
+}
 </style>

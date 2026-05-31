@@ -55,62 +55,174 @@ async function handleRegister() {
 </script>
 
 <template>
-  <div class="login-container">
-    <h1>英语单词学习系统</h1>
-    <div class="form-card">
-      <h2>登录 / 注册</h2>
-      <input v-model="username" placeholder="用户名" @keyup.enter="handleLogin" />
-      <input v-model="password" type="password" placeholder="密码" @keyup.enter="handleLogin" />
-      <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
-      <p v-if="successMsg" class="success">{{ successMsg }}</p>
-      <div class="buttons">
-        <button :disabled="loading" @click="handleLogin">登录</button>
-        <button :disabled="loading" class="secondary" @click="handleRegister">注册</button>
+  <div class="login-page">
+    <div class="hero">
+      <h1>词汇记忆</h1>
+      <p class="tagline">基于艾宾浩斯遗忘曲线的智能复习系统</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span :class="['tab', !successMsg && 'active']">登录</span>
+        <span class="divider">·</span>
+        <span :class="['tab', successMsg && 'active']">注册</span>
+      </div>
+      <input
+        v-model="username"
+        placeholder="用户名"
+        autocomplete="username"
+        @keyup.enter="handleLogin"
+      />
+      <input
+        v-model="password"
+        type="password"
+        placeholder="密码"
+        autocomplete="current-password"
+        @keyup.enter="handleLogin"
+      />
+      <p v-if="errorMsg" class="msg error">{{ errorMsg }}</p>
+      <p v-if="successMsg" class="msg success">{{ successMsg }}</p>
+      <div class="actions">
+        <button class="btn-primary" :disabled="loading" @click="handleLogin">
+          登录
+        </button>
+        <button class="btn-secondary" :disabled="loading" @click="handleRegister">
+          注册
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.login-container {
-  max-width: 400px;
-  margin: 80px auto;
+.login-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
+
+.hero {
   text-align: center;
+  margin-bottom: 36px;
 }
-h1 { margin-bottom: 24px; color: #333; }
-.form-card {
-  background: #fff;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
 }
-h2 { margin-bottom: 20px; color: #666; font-size: 18px; }
+
+.tagline {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 36px 32px 28px;
+  border: 1px solid var(--border);
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.tab {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.tab.active {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.divider {
+  margin: 0 8px;
+}
+
 input {
   display: block;
   width: 100%;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-body);
   font-size: 15px;
-  box-sizing: border-box;
+  color: var(--text);
+  background: var(--bg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
 }
-input:focus { outline: none; border-color: #4a90d9; }
-.error { color: #e74c3c; font-size: 14px; margin: 4px 0; }
-.success { color: #27ae60; font-size: 14px; margin: 4px 0; }
-.buttons { display: flex; gap: 12px; margin-top: 8px; }
-button {
+
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.12);
+}
+
+.msg {
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.msg.error { color: var(--danger); }
+.msg.success { color: var(--success); }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.btn-primary,
+.btn-secondary {
   flex: 1;
-  padding: 10px;
+  padding: 13px 0;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-family: var(--font-body);
   font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
-  background: #4a90d9;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--accent);
   color: #fff;
 }
-button:hover { background: #357abd; }
-button:disabled { opacity: 0.6; cursor: not-allowed; }
-button.secondary { background: #95a5a6; }
-button.secondary:hover { background: #7f8c8d; }
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 16px rgba(200, 150, 62, 0.35);
+}
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--border);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 </style>

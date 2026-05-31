@@ -43,8 +43,8 @@ async function handleReview(remembered) {
     } else {
       done.value = true;
     }
-  } catch (err) {
-    // silently retry — don't block the user
+  } catch (_) {
+    // silently retry
   } finally {
     submitting.value = false;
   }
@@ -52,94 +52,250 @@ async function handleReview(remembered) {
 </script>
 
 <template>
-  <div class="learn-container">
-    <div v-if="loading" class="status">加载中...</div>
-
-    <div v-else-if="done" class="status">
-      <h2>今日任务完成</h2>
-      <p>干得好，明天继续加油！</p>
-      <button @click="router.push('/home')">返回首页</button>
+  <div class="learn-page">
+    <!-- Loading -->
+    <div v-if="loading" class="center">
+      <p class="loading-text">加载中...</p>
     </div>
 
+    <!-- Done -->
+    <div v-else-if="done" class="center">
+      <div class="done-icon">&#10003;</div>
+      <h2>今日任务完成</h2>
+      <p class="sub">干得好，明天继续加油！</p>
+      <button class="back-btn" @click="router.push('/home')">返回首页</button>
+    </div>
+
+    <!-- Word Card -->
     <div v-else class="card">
-      <div class="tag">{{ type === 'review' ? '复习' : '新词' }}</div>
+      <div class="card-top">
+        <span class="type-badge">{{ type === 'review' ? '复习' : '新词' }}</span>
+        <span class="progress">{{ currentIndex + 1 }} / {{ words.length }}</span>
+      </div>
+
       <h2 class="word">{{ currentWord().word }}</h2>
       <p class="phonetic">{{ currentWord().phonetic }}</p>
-      <p class="meaning">{{ currentWord().meaning }}</p>
-      <p class="example">{{ currentWord().example }}</p>
 
-      <div class="progress">
-        {{ currentIndex + 1 }} / {{ words.length }}
+      <div class="divider"></div>
+
+      <p class="meaning">{{ currentWord().meaning }}</p>
+      <p class="example">"{{ currentWord().example }}"</p>
+
+      <div class="dots">
+        <span
+          v-for="(_, i) in words"
+          :key="i"
+          :class="['dot', { active: i === currentIndex, done: i < currentIndex }]"
+        ></span>
       </div>
 
       <div class="actions">
-        <button class="forgot" :disabled="submitting" @click="handleReview(false)">没记住</button>
-        <button class="remembered" :disabled="submitting" @click="handleReview(true)">记住了</button>
+        <button class="btn-forgot" :disabled="submitting" @click="handleReview(false)">
+          没记住
+        </button>
+        <button class="btn-remembered" :disabled="submitting" @click="handleReview(true)">
+          记住了
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.learn-container {
-  max-width: 440px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
-.status {
-  text-align: center;
-  margin-top: 80px;
-}
-.status h2 { color: #27ae60; }
-.status p { color: #888; margin: 12px 0 24px; }
-.status button {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 8px;
-  background: #4a90d9;
-  color: #fff;
-  cursor: pointer;
-  font-size: 15px;
-}
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-  text-align: center;
-}
-.tag {
-  display: inline-block;
-  background: #eef5ff;
-  color: #4a90d9;
-  padding: 4px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  margin-bottom: 16px;
-}
-.word { font-size: 28px; color: #222; margin-bottom: 6px; }
-.phonetic { color: #999; font-size: 14px; margin-bottom: 12px; }
-.meaning { font-size: 18px; color: #555; margin-bottom: 8px; }
-.example {
-  font-size: 14px;
-  color: #888;
-  font-style: italic;
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
-.progress { color: #bbb; font-size: 13px; margin-bottom: 24px; }
-.actions { display: flex; gap: 12px; }
-.actions button {
+.learn-page {
   flex: 1;
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.done-icon {
+  width: 72px;
+  height: 72px;
+  background: #e8f0e9;
+  color: var(--success);
+  font-size: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+
+.sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.back-btn {
+  padding: 12px 36px;
+  background: var(--accent);
+  color: #fff;
   border: none;
   border-radius: 10px;
+  font-family: var(--font-body);
   font-size: 15px;
   cursor: pointer;
+  transition: background 0.2s;
 }
-.actions button:disabled { opacity: 0.5; cursor: not-allowed; }
-.forgot { background: #fde8e8; color: #e74c3c; }
-.forgot:hover:not(:disabled) { background: #f5c6c6; }
-.remembered { background: #d4edda; color: #27ae60; }
-.remembered:hover:not(:disabled) { background: #b8dfc6; }
+
+.back-btn:hover {
+  background: var(--accent-hover);
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 36px 32px 28px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.type-badge {
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: #f2efe9;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.progress {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 4px;
+}
+
+.phonetic {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 20px;
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+.meaning {
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.example {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  padding: 0 8px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: var(--accent);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.dot.done {
+  background: var(--success);
+  opacity: 0.4;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+}
+
+.btn-forgot,
+.btn-remembered {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-forgot {
+  background: #faf0f0;
+  color: var(--danger);
+}
+
+.btn-forgot:hover:not(:disabled) {
+  background: #f3dddd;
+}
+
+.btn-remembered {
+  background: #e8f0e9;
+  color: var(--success);
+}
+
+.btn-remembered:hover:not(:disabled) {
+  background: #d4e6d5;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 </style>

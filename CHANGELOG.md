@@ -118,3 +118,35 @@
   - 优先从已学单词出题，4 选 1 选择题
   - 提交自动评分 + 展示错题
 - **路由懒加载** — Words/Quiz 页面按需加载
+
+---
+
+## [0.5.0] — 2026-05-31
+
+### 升级：MongoDB + Mongoose
+
+- **MongoDB Atlas** — 免费 M0 集群，512MB，云端永久存储
+- **数据模型** (`server/models/`)
+  - `User.js` — username + bcrypt 密码
+  - `Word.js` — word / phonetic / meaning / example
+  - `Record.js` — userId + wordId (ObjectId 引用) + stage + 复习时间
+- **路由改造**
+  - `auth.js`：`readJSON/writeJSON` → `User.findOne()` / `User.create()`
+  - `words.js`：手动数组过滤 → `Record.find().populate('wordId')` + 索引查询
+  - 7 个 API 全部无缝迁移
+- **自动种子** — 首次启动检测 Word 集合为空则自动导入 20 个单词
+- **部署配置** — `MONGODB_URI` 环境变量 → Railway Variables
+
+### 解决的核心问题
+
+- **数据不丢失**：Railway 容器重建/重启不影响数据，MongoDB Atlas 独立存储
+- **查询更高效**：索引 `{ userId, wordId }` 和 `{ userId, nextReviewAt }` 替代 JS 遍历
+- **扩展性**：之后加功能改几行查询即可，不再需要手动过滤数组
+
+### 踩坑记录
+
+| 坑 | 解决 |
+|----|------|
+| Railway Variables 未读到 env | 确认加在服务级 Variables 里 |
+| Atlas 连接被拒 (ECONNREFUSED) | Network Access 加 `0.0.0.0/0` |
+| 连接字符串 `w=majority` 报错 | 去掉 query string，用干净 URI |

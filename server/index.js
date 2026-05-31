@@ -24,15 +24,19 @@ app.get(/^\/(?!api\/).*/, (req, res) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
 
-// 连接 MongoDB → 自动种子 → 启动
+// 连接 MongoDB → 自动种子（增量）→ 启动
 connectDB().then(async () => {
   const Word = require('./models/Word');
-  const count = await Word.countDocuments();
-  if (count === 0) {
-    const wordsData = require('./data/words.json');
-    await Word.insertMany(wordsData);
-    console.log(`Auto-seeded ${wordsData.length} words`);
+  const wordsData = require('./data/words.json');
+  let inserted = 0;
+  for (const w of wordsData) {
+    const exists = await Word.findOne({ word: w.word });
+    if (!exists) {
+      await Word.create({ word: w.word, phonetic: w.phonetic, meaning: w.meaning, example: w.example });
+      inserted++;
+    }
   }
+  if (inserted > 0) console.log(`Auto-seeded ${inserted} new words`);
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });

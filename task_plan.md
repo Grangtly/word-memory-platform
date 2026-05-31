@@ -4,7 +4,7 @@
 构建一个基于艾宾浩斯遗忘曲线的自适应英语单词学习与智能复习系统，支持注册登录、单词学习、智能复习调度。
 
 ## 当前阶段
-阶段 1-4.5 已完成，待进入阶段 5
+全部完成 ✅
 
 ## 各阶段
 
@@ -61,7 +61,14 @@
 - **状态：** complete
 
 ### 阶段 5：升级到 MongoDB
-- **状态：** pending
+- [x] 5.1 安装 mongoose
+- [x] 5.2 创建 db.js + 三个模型（User/Word/Record）
+- [x] 5.3 重写 auth.js 使用 MongoDB
+- [x] 5.4 重写 words.js 使用 MongoDB（7 个 API 全部改造）
+- [x] 5.5 seed.js 种子脚本 + index.js 自动种子
+- [x] 5.6 MongoDB Atlas 创建集群 + 配置白名单
+- [x] 5.7 Railway 设置 MONGODB_URI + 部署验证
+- **状态：** complete
 
 ## 已做决策
 | 决策 | 理由 |

@@ -4,7 +4,7 @@
 构建一个基于艾宾浩斯遗忘曲线的自适应英语单词学习与智能复习系统，支持注册登录、单词学习、智能复习调度。
 
 ## 当前阶段
-阶段 1-3 已完成，待进入阶段 4
+阶段 1-4 已完成，待进入阶段 5
 
 ## 各阶段
 
@@ -39,9 +39,17 @@
 - **状态：** complete
 
 ### 阶段 4：部署上线
-- [x] 4.1 初始化 git + 提交代码
-- [x] 4.2 配置生产环境变量 (VITE_API_URL)
-- [x] 4.3 编写部署指南
+- [x] 4.1 初始化 git + 推送 GitHub（Grangtly/word-memory-platform）
+- [x] 4.2 尝试 Wispbyte → 放弃（文件上传路径不匹配）
+- [x] 4.3 切换到 Railway，多次修复构建配置
+  - nixpacks.toml → 失败（$NIXPACKS_PATH 平台 bug）
+  - railway.json → 失败（同样 nixpacks 问题）
+  - railway.toml builder="docker" → 失败（必须大写 DOCKERFILE）
+  - railway.toml builder="DOCKERFILE" + 多阶段 Dockerfile → 成功
+- [x] 4.4 统一前后端：Dockerfile 构建前端 dist + 复制到 server/public
+- [x] 4.5 server/index.js 改造：PORT 环境变量 + 托管静态文件 + SPA 回退
+- [x] 4.6 修复 Express 5 不兼容：`app.get('*')` → 正则匹配
+- [x] 4.7 部署成功，一个 Railway 地址同时服务前后端
 - **状态：** complete
 
 ### 阶段 5：升级到 MongoDB
@@ -53,8 +61,13 @@
 | 先用 JSON 文件存储 | 快速跑通流程，无需安装数据库 |
 | JWT 认证 | 无状态，适合前后端分离 |
 | Vite 代理解决跨域 | 开发环境简单，无需额外配置 CORS |
+| Railway 取代 Vercel+Wispbyte | Vercel 需手机验证，Wispbyte 部署失败；Railway 一个服务同时托管前后端更简单 |
+| Dockerfile 多阶段构建 | Railway nixpacks 有 bug，Dockerfile 构建更可控 |
 
 ## 遇到的错误
 | 错误 | 尝试次数 | 解决方案 |
 |------|---------|---------|
-| 无（后端和前端阶段顺利） | — | — |
+| Wispbyte 找不到 index.js | 2 | 上传方式不支持；换 Railway |
+| Railway $NIXPACKS_PATH 报错 | 3 | nixpacks 平台 bug；改用 Dockerfile 构建 |
+| railway.toml builder 值错误 | 1 | `"docker"` 改为 `"DOCKERFILE"` (必须大写) |
+| Express 5 `app.get('*')` 崩溃 | 1 | Express 5 path-to-regexp v8 不支持 `*`；改用正则 `/^\/(?!api\/).*/` |

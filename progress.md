@@ -41,8 +41,29 @@
 | 我在哪里？ | 阶段 1 完成，准备进入阶段 2 |
 | 我要去哪里？ | 阶段 2：Vue 3 前端开发 |
 | 目标是什么？ | 构建基于遗忘曲线的单词学习复习系统 |
-| 我学到了什么？ | Vue 3 + Vite 构建通过，全栈流程跑通 |
-| 我做了什么？ | 后端 + 前端 + 联调全部完成 |
+| 我学到了什么？ | Railway 部署踩坑：nixpacks bug → 换 Dockerfile；Express 5 不支持 `*` 通配符 |
+| 我做了什么？ | 后端 + 前端 + 联调 + Railway 部署全部完成 |
+
+## 会话：2026-05-31
+
+### 阶段 4：部署上线
+- **状态：** complete
+- **开始时间：** 2026-05-31
+- **完成时间：** 2026-05-31
+- 执行的操作：
+  - 创建 GitHub 仓库 Grangtly/word-memory-platform，推送代码
+  - 尝试 Wispbyte 部署 → 文件上传路径问题，放弃
+  - 注册 Railway，GitHub 导入仓库
+  - Railway nixpacks 构建反复报 $NIXPACKS_PATH → 创建 nixpacks.toml/railway.json 无效 → 确认是 Railway 平台 bug
+  - 换 Dockerfile 方案：创建多阶段 Dockerfile（先编 client 再编 server）
+  - 修改 server/index.js：PORT 环境变量 + 托管 public/ 静态文件 + SPA 正则回退
+  - railway.toml builder 写错 "docker" → 改为 "DOCKERFILE"
+  - 客户端 Dockerfile 损坏 → Express 5 `app.get('*')` 不兼容 → 改正则
+  - 部署成功：前后端统一在 Railway 一个服务
+- 创建/修改的文件：
+  - Dockerfile, railway.toml, client/Dockerfile
+  - server/index.js（PORT + 静态托管 + SPA 回退）
+  - nixpacks.toml, railway.json（过程中创建→后续删除）
 
 ### 阶段 2：Vue 3 前端开发
 - **状态：** complete

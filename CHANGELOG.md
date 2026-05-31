@@ -71,20 +71,24 @@
 
 ---
 
-## [0.3.0] — 2026-05-25
+## [0.3.0] — 2026-05-31
 
-### 新增：部署准备
+### 新增：Railway 部署上线
 
-- **Git 仓库** — 初始化 git，完成首次提交
-- **环境变量配置** (`client/src/api.js`) — 支持 `VITE_API_URL` 环境变量切换后端地址
-- **`.gitignore`** — 排除 node_modules / dist / .env
-- **部署指南** (`部署指南.md`) — GitHub + Render + Vercel 完整部署步骤
-  - 后端部署到 Render（Free 实例，支持 Node.js）
-  - 前端部署到 Vercel（自动检测 Vite，零配置）
-  - 自定义域名绑定说明
+- **GitHub 仓库** — Grangtly/word-memory-platform，代码已推送
+- **Dockerfile 多阶段构建** — 先构建 Vue 前端 `dist/`，再打包到服务端 `server/public/`
+- **server/index.js 改造**
+  - `PORT` 改用 `process.env.PORT \|\| 3000`（兼容 Railway 动态端口）
+  - 新增静态文件托管 + SPA 路由回退（正则匹配，兼容 Express 5）
+- **railway.toml** — 指定 `builder = "DOCKERFILE"` 构建
+- **统一部署架构** — 一个 Railway 服务同时提供前端页面和后端 API，无需 Vercel
+- **部署指南** (`部署指南.md`) — 更新为实际 Railway 部署流程 + 踩坑记录
 
-### 待用户操作
+### 部署踩坑记录
 
-1. 创建 GitHub 仓库并推送代码
-2. Render 部署后端（需 GitHub 账号授权）
-3. Vercel 部署前端（需设置 `VITE_API_URL` 环境变量）
+| 坑 | 原因 | 解决 |
+|----|------|------|
+| Wispbyte 找不到模块 | 文件路径层级不匹配 | 换 Railway |
+| Railway nixpacks `$NIXPACKS_PATH` | 平台基础镜像 bug | 改用 Dockerfile |
+| `railway.toml` 被拒 | `"docker"` 必须大写 | 改为 `"DOCKERFILE"` |
+| Express 5 `app.get('*')` 崩溃 | path-to-regexp v8 不兼容 | 改用正则 |

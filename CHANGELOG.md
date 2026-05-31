@@ -92,3 +92,29 @@
 | Railway nixpacks `$NIXPACKS_PATH` | 平台基础镜像 bug | 改用 Dockerfile |
 | `railway.toml` 被拒 | `"docker"` 必须大写 | 改为 `"DOCKERFILE"` |
 | Express 5 `app.get('*')` 崩溃 | path-to-regexp v8 不兼容 | 改用正则 |
+
+---
+
+## [0.4.0] — 2026-05-31
+
+### 前端重设计：暖调学院风
+
+- **字体**：Playfair Display（标题衬线）+ DM Sans（正文无衬线）
+- **配色**：暖奶油底 #faf8f5 + 深海蓝 #2c3e6b + 琥珀金 #c8963e
+- **三个页面**全面重写（Login / Home / Learn），卡片质感 + 过渡动画
+
+### 新增功能
+
+- **学习统计** (`GET /api/words/stats`)
+  - 已学单词数 / 今日复习数 / 掌握率 / 连续打卡天数
+  - 首页实时展示
+- **单词列表** (`GET /api/words/list` + Words.vue)
+  - 20 个单词学习状态一览（未学/学习中/已掌握）
+  - 按状态筛选
+- **每日打卡** (Home 页徽章)
+  - 有复习记录即算打卡，显示连续天数
+  - 算法：从今天往前扫描 lastReviewAt 连续性
+- **测验模式** (`GET/POST /api/words/quiz` + Quiz.vue)
+  - 优先从已学单词出题，4 选 1 选择题
+  - 提交自动评分 + 展示错题
+- **路由懒加载** — Words/Quiz 页面按需加载

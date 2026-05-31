@@ -4,7 +4,7 @@
 构建一个基于艾宾浩斯遗忘曲线的自适应英语单词学习与智能复习系统，支持注册登录、单词学习、智能复习调度。
 
 ## 当前阶段
-阶段 1-4 已完成，待进入阶段 5
+阶段 1-4.5 已完成，待进入阶段 5
 
 ## 各阶段
 
@@ -52,6 +52,14 @@
 - [x] 4.7 部署成功，一个 Railway 地址同时服务前后端
 - **状态：** complete
 
+### 阶段 4.5：新增功能（学习统计 + 单词列表 + 打卡 + 测验）
+- [x] 后端：新增 4 个 API（stats / list / quiz GET / quiz POST）
+- [x] 前端：Home.vue 统计面板 + 打卡徽章
+- [x] 前端：Words.vue 单词列表 + 状态筛选
+- [x] 前端：Quiz.vue 选择题测验 + 自动评分
+- [x] 本地测试 + 构建验证 + 推 Railway 部署
+- **状态：** complete
+
 ### 阶段 5：升级到 MongoDB
 - **状态：** pending
 
@@ -63,6 +71,8 @@
 | Vite 代理解决跨域 | 开发环境简单，无需额外配置 CORS |
 | Railway 取代 Vercel+Wispbyte | Vercel 需手机验证，Wispbyte 部署失败；Railway 一个服务同时托管前后端更简单 |
 | Dockerfile 多阶段构建 | Railway nixpacks 有 bug，Dockerfile 构建更可控 |
+| 前端暖调学院风重设计 | 用户体验差，三个页面统一使用 Playfair Display + DM Sans 字体 + 奶油底配色 |
+| 测验从已学单词出题 | 避免用户遇到没学过的单词，保证测验有效性 |
 
 ## 遇到的错误
 | 错误 | 尝试次数 | 解决方案 |

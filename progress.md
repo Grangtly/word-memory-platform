@@ -41,8 +41,17 @@
 | 我在哪里？ | 阶段 1 完成，准备进入阶段 2 |
 | 我要去哪里？ | 阶段 2：Vue 3 前端开发 |
 | 目标是什么？ | 构建基于遗忘曲线的单词学习复习系统 |
-| 我学到了什么？ | Railway 部署踩坑：nixpacks bug → 换 Dockerfile；Express 5 不支持 `*` 通配符 |
-| 我做了什么？ | 后端 + 前端 + 联调 + Railway 部署全部完成 |
+| 我学到了什么？ | Railway 部署踩坑；暖调学院风设计；测验算法从已学单词出题 |
+| 我做了什么？ | 后端 + 前端 + 联调 + 部署 + 4 个新功能 + 前端重设计 |
+
+## 五问重启检查
+| 问题 | 答案 |
+|------|------|
+| 我在哪里？ | 阶段 4.5 完成，准备进入阶段 5 |
+| 我要去哪里？ | 阶段 5：升级到 MongoDB |
+| 目标是什么？ | 构建基于遗忘曲线的单词学习复习系统 |
+| 我学到了什么？ | 见 findings.md |
+| 我做了什么？ | 7 API + 5 页面 + 暖调学院风设计 + Railway 部署 |
 
 ## 会话：2026-05-31
 
@@ -91,3 +100,45 @@
   - 全流程测试：注册 → 登录 → 获取单词 → 提交复习
   - 验证 records.json 记录正确生成
 - 测试结果：全部通过
+
+### 阶段 4.5：新增功能 + 前端重设计
+- **状态：** complete
+- **完成时间：** 2026-05-31 13:30
+- 执行的操作：
+  - 前端重设计：暖调学院风（Playfair Display + DM Sans，奶油底 + 深海蓝 + 琥珀金）
+  - 后端新增 4 个 API：stats / list / quiz GET / quiz POST
+  - 连续打卡算法：从今天往前扫描 lastReviewAt 的时间戳连续性
+  - 测验选题：优先从已学单词中随机抽，不足从全词库补充
+  - Home.vue 改造：实时统计面板 + 连续打卡徽章 + 单词列表/测验入口
+  - 新建 Words.vue：20 个单词 + 状态标签(未学/学习中/已掌握) + 可筛选
+  - 新建 Quiz.vue：5 道选择题 + 点选交互 + 提交评分 + 错题展示
+  - 路由懒加载：Words/Quiz 按需加载减小首屏体积
+  - 本地全流程测试通过，推 Railway 部署
+- 创建/修改的文件：
+  - server/routes/words.js（新增 100+ 行）
+  - client/src/api.js（新增 4 个 API 调用）
+  - client/src/views/Home.vue（全面改造）
+  - client/src/views/Words.vue（新建）
+  - client/src/views/Quiz.vue（新建）
+  - client/src/router/index.js（新增 2 个路由）
+  - client/index.html（Google Fonts）
+  - client/src/style.css（全局设计变量）
+
+### 阶段 4：部署上线
+- **状态：** complete
+- **开始时间：** 2026-05-31
+- **完成时间：** 2026-05-31
+- 执行的操作：
+  - 创建 GitHub 仓库 Grangtly/word-memory-platform，推送代码
+  - 尝试 Wispbyte 部署 → 文件上传路径问题，放弃
+  - 注册 Railway，GitHub 导入仓库
+  - Railway nixpacks 构建反复报 $NIXPACKS_PATH → 创建 nixpacks.toml/railway.json 无效 → 确认是 Railway 平台 bug
+  - 换 Dockerfile 方案：创建多阶段 Dockerfile（先编 client 再编 server）
+  - 修改 server/index.js：PORT 环境变量 + 托管 public/ 静态文件 + SPA 正则回退
+  - railway.toml builder 写错 "docker" → 改为 "DOCKERFILE"
+  - Express 5 `app.get('*')` 不兼容 → 改正则
+  - 部署成功：前后端统一在 Railway 一个服务
+- 创建/修改的文件：
+  - Dockerfile, railway.toml, client/Dockerfile
+  - server/index.js（PORT + 静态托管 + SPA 回退）
+  - nixpacks.toml, railway.json（过程中创建→后续删除）

@@ -1,8 +1,6 @@
 {
   "build": {
-    "builder": "NIXPACKS",
-    "nixpacksConfig": {
-      "appDir": "server"
-    }
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "Dockerfile"
   }
 }

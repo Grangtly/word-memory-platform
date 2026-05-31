@@ -1,0 +1,6 @@
+[build]
+# 告诉 Railway 从 server/ 目录构建
+builder = "nixpacks"
+
+[service]
+name = "word-memory-api"

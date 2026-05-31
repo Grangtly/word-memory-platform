@@ -51,23 +51,23 @@
 3. 复制连接字符串，格式如下：
 
 ```
-mongodb+srv://admin:<password>@cluster0.xxxxx.mongodb.net/word-memory?retryWrites=true&w=majority
+mongodb+srv://admin:<password>@cluster0.xxxxx.mongodb.net/word-memory
 ```
 
 4. 把 `<password>` 替换成你的数据库用户密码
-5. 把 `word-memory` 换成你想要的数据库名（就保持 `word-memory`）
+5. ⚠️ **重要**：如果 Atlas 给的连接串末尾有 `?retryWrites=true&w=majority`，**删掉它**。mongoose 某些版本会解析失败报 `URI option "retr" cannot be specified`。
 
 ---
 
 ## 步骤 6：在 Railway 设置环境变量
 
-1. 打开 [Railway Dashboard](https://railway.app/dashboard) → 你的项目
-2. 顶部点 **Variables** 标签
+1. 打开 [Railway Dashboard](https://railway.app/dashboard) → 你的项目 → **点进服务卡片**
+2. 顶部点 **Variables** 标签（不是项目首页的，是服务内的）
 3. 添加：
 
 | Key | Value |
 |-----|-------|
-| `MONGODB_URI` | 你的完整连接字符串 |
+| `MONGODB_URI` | 你的连接字符串 |
 
 4. Railway 会自动重新部署
 

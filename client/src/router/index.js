@@ -8,6 +8,8 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/home', component: Home },
   { path: '/learn', component: Learn },
+  { path: '/words', component: () => import('../views/Words.vue') },
+  { path: '/quiz', component: () => import('../views/Quiz.vue') },
 ];
 
 const router = createRouter({

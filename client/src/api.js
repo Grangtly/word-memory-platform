@@ -28,3 +28,19 @@ export function getTodayWords() {
 export function submitReview(wordId, remembered) {
   return api.post(`/words/${wordId}/review`, { remembered });
 }
+
+export function getStats() {
+  return api.get('/words/stats');
+}
+
+export function getWordList() {
+  return api.get('/words/list');
+}
+
+export function getQuiz(count = 5) {
+  return api.get(`/words/quiz?count=${count}`);
+}
+
+export function submitQuiz(answers) {
+  return api.post('/words/quiz', { answers });
+}

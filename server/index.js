@@ -19,7 +19,8 @@ const publicDir = path.join(__dirname, 'public');
 app.use(express.static(publicDir));
 
 // SPA 回退：非 API 请求都返回 index.html
-app.get('*', (req, res) => {
+// Express 5 不能用 *，改用正则匹配所有路径
+app.get(/^\/(?!api\/).*/, (req, res) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
 

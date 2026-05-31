@@ -150,3 +150,26 @@
 | Railway Variables 未读到 env | 确认加在服务级 Variables 里 |
 | Atlas 连接被拒 (ECONNREFUSED) | Network Access 加 `0.0.0.0/0` |
 | 连接字符串 `w=majority` 报错 | 去掉 query string，用干净 URI |
+
+---
+
+## [0.5.1] — 2026-05-31
+
+### 新增：词库扩展 + 保活
+
+- **词库扩至 200 词** — 覆盖四六级核心高频词汇
+- **增量种子** — 按 word 字段查重，加新词不重复，不影响已有数据
+- **UptimeRobot 保活** — 每 5 分钟 HTTP ping，解决 Railway 免费实例休眠问题，访问不再等待
+
+### 项目最终状态
+
+| 指标 | 值 |
+|------|----|
+| 词库 | 200 四六级核心词 |
+| API | 7 个 |
+| 页面 | 5 个（Login/Home/Learn/Words/Quiz） |
+| 功能 | 学习/复习/统计/列表/打卡/测验 |
+| 存储 | MongoDB Atlas M0 免费集群 |
+| 部署 | Railway（Dockerfile 多阶段构建） |
+| 保活 | UptimeRobot 每 5 分钟 |
+| 设计 | 暖调学院风 |

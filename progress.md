@@ -74,6 +74,17 @@
   - server/index.js（PORT + 静态托管 + SPA 回退）
   - nixpacks.toml, railway.json（过程中创建→后续删除）
 
+### 阶段 5：MongoDB 升级
+- **状态：** complete
+- **完成时间：** 2026-05-31 15:30
+- 执行的操作：安装 mongoose + 创建三个模型 + 重写所有路由 + Atlas 集群 + 部署验证
+- 创建/修改的文件：server/db.js, models/, routes/auth.js, routes/words.js, seed.js, index.js, MongoDB配置指南.md
+
+### 阶段 5.5：词库扩展 + 保活
+- **状态：** complete
+- **完成时间：** 2026-05-31 16:00
+- 执行的操作：words.json 20→200 四六级核心词 + 增量种子 + UptimeRobot 保活
+
 ### 阶段 2：Vue 3 前端开发
 - **状态：** complete
 - **开始时间：** 2026-05-25 22:30

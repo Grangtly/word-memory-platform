@@ -70,6 +70,12 @@
 - [x] 5.7 Railway 设置 MONGODB_URI + 部署验证
 - **状态：** complete
 
+### 阶段 5.5：词库扩展 + 保活
+- [x] words.json 从 20 词 → 200 个四六级核心词汇
+- [x] 种子改为增量模式（按 word 字段查重）
+- [x] UptimeRobot 配置 5 分钟保活监控
+- **状态：** complete
+
 ## 已做决策
 | 决策 | 理由 |
 |------|------|
@@ -78,8 +84,11 @@
 | Vite 代理解决跨域 | 开发环境简单，无需额外配置 CORS |
 | Railway 取代 Vercel+Wispbyte | Vercel 需手机验证，Wispbyte 部署失败；Railway 一个服务同时托管前后端更简单 |
 | Dockerfile 多阶段构建 | Railway nixpacks 有 bug，Dockerfile 构建更可控 |
-| 前端暖调学院风重设计 | 用户体验差，三个页面统一使用 Playfair Display + DM Sans 字体 + 奶油底配色 |
+| 前端暖调学院风重设计 | 用户体验差，统一 Playfair Display + DM Sans + 奶油底琥珀金 |
 | 测验从已学单词出题 | 避免用户遇到没学过的单词，保证测验有效性 |
+| MongoDB Atlas 免费 M0 集群 | 512MB 免费，数据与容器分离，永久不丢 |
+| 增量种子代替全量 | 后续加词不改已有数据，按 word 查重 |
+| UptimeRobot 保活 | Railway 免费实例 15 分钟无请求就休眠，外部定时 ping 解决 |
 
 ## 遇到的错误
 | 错误 | 尝试次数 | 解决方案 |
@@ -87,4 +96,7 @@
 | Wispbyte 找不到 index.js | 2 | 上传方式不支持；换 Railway |
 | Railway $NIXPACKS_PATH 报错 | 3 | nixpacks 平台 bug；改用 Dockerfile 构建 |
 | railway.toml builder 值错误 | 1 | `"docker"` 改为 `"DOCKERFILE"` (必须大写) |
-| Express 5 `app.get('*')` 崩溃 | 1 | Express 5 path-to-regexp v8 不支持 `*`；改用正则 `/^\/(?!api\/).*/` |
+| Express 5 `app.get('*')` 崩溃 | 1 | 改用正则 `/^\/(?!api\/).*/` |
+| Atlas 连接被拒 | 2 | Network Access 加 `0.0.0.0/0` |
+| 连接字符串 `w=majority` 报错 | 1 | 去掉 query string |
+| Railway 冷启动超慢 | 1 | UptimeRobot 每 5 分钟保活 |

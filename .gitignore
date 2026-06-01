@@ -3,6 +3,3 @@ dist/
 .env
 .DS_Store
 Thumbs.db
-.idea/
-*.zip
-*.pptx
